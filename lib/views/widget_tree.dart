@@ -18,13 +18,30 @@ class WidgetTree extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dan tri'),
+
         centerTitle: true,
         leading: Icon(Icons.person),
-        actions: [Icon(Icons.notifications)],
+        actions: [
+          Icon(Icons.notifications),
+          IconButton(
+            icon: ValueListenableBuilder(
+              valueListenable: isDarkModeNotifier,
+              builder: (context, isDarkMode, child) {
+                return Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode);
+              },
+            ),
+            onPressed: () {
+              isDarkModeNotifier.value = !isDarkModeNotifier.value;
+            },
+          ),
+        ],
       ),
-      body: ValueListenableBuilder(valueListenable: selectedPageNotifier, builder: (context, selectedPage, child) {
-        return pages.elementAt(selectedPage);
-      }),
+      body: ValueListenableBuilder(
+        valueListenable: selectedPageNotifier,
+        builder: (context, selectedPage, child) {
+          return pages.elementAt(selectedPage);
+        },
+      ),
       bottomNavigationBar: NavbarWidget(),
     );
   }
