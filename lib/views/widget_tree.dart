@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/views/pages/categories.dart';
 import 'package:newsapp/widgets/navbar_widget.dart';
 import 'pages/home_page.dart';
 import 'pages/profile_page.dart';
 import '../data/notifiers.dart';
 
 List<Widget> pages = [
-  HomePage(),
-  ProfilePage(),
+  NewsPage(),
+  Categories(),
   Center(child: Text("Video Page")),
 ];
 
@@ -20,7 +21,15 @@ class WidgetTree extends StatelessWidget {
         title: const Text('Dan tri'),
 
         centerTitle: true,
-        leading: Icon(Icons.person),
+        leading: IconButton(
+          icon: const Icon(Icons.person),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
+          },
+        ),
         actions: [
           Icon(Icons.notifications),
           IconButton(
