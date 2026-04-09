@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../services/news_service.dart';
 import '../../../models/article.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  late Future<List<Article>> futureNews;
+  Future<List<Article>>? futureNews;
 
   @override
   void initState() {
@@ -47,33 +48,34 @@ class _NewsPageState extends State<NewsPage> {
 
               return Card(
                 margin: const EdgeInsets.all(10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Ảnh ở trên
-                    if (article.imageUrl != null)
+                    // 🖼️ Ảnh phía trên
+                    if (article.imageUrl != null &&
+                        article.imageUrl!.isNotEmpty)
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(10),
+                          top: Radius.circular(12),
                         ),
-                        child: Image.network(
-                          article.imageUrl!,
+                        child: CachedNetworkImage(
+                          imageUrl: article.imageUrl ?? "",
                           width: double.infinity,
                           height: 200,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const SizedBox(
-                                height: 200,
-                                child: Center(
-                                  child: Icon(Icons.image_not_supported),
-                                ),
-                              ),
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.broken_image),
                         ),
                       ),
 
-                    // Nội dung bên dưới
+                    // 📝 Nội dung bên dưới
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -88,13 +90,24 @@ class _NewsPageState extends State<NewsPage> {
                             ),
                           ),
 
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 8),
 
                           // Description
                           Text(
                             article.description ?? "",
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
+                          ),
+
+                          const SizedBox(height: 8),
+
+                          // Source
+                          Text(
+                            article.source.name,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),

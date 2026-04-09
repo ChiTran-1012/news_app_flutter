@@ -46,7 +46,7 @@ class _CategoriesState extends State<Categories> {
               return Card(
                 margin: const EdgeInsets.all(10),
                 child: ListTile(
-                  title: Text(article.title),
+                  title: Text(article.source.name ?? "No source"),
                   subtitle: Text(article.author ?? "Unknown"),
                 ),
               );

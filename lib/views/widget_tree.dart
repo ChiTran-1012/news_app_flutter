@@ -4,6 +4,7 @@ import 'package:newsapp/widgets/navbar_widget.dart';
 import 'pages/home_page.dart';
 import 'pages/profile_page.dart';
 import '../data/notifiers.dart';
+import 'pages/search.dart';
 
 List<Widget> pages = [
   NewsPage(),
@@ -31,6 +32,15 @@ class WidgetTree extends StatelessWidget {
           },
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Search()),
+              );
+            },
+          ),
           Icon(Icons.notifications),
           IconButton(
             icon: ValueListenableBuilder(
@@ -44,13 +54,17 @@ class WidgetTree extends StatelessWidget {
             },
           ),
         ],
+        
       ),
+      
+      
       body: ValueListenableBuilder(
         valueListenable: selectedPageNotifier,
         builder: (context, selectedPage, child) {
           return pages.elementAt(selectedPage);
         },
       ),
+     
       bottomNavigationBar: NavbarWidget(),
     );
   }

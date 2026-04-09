@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'views/widget_tree.dart';
 import 'data/notifiers.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  await Hive.openBox('newsBox'); // 👈 tạo box
+
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

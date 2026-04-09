@@ -1,3 +1,5 @@
+import 'source.dart';
+
 class Article {
   final String title;
   final String? description;
@@ -7,6 +9,8 @@ class Article {
   final String? publishedAt;
   final String? url;
 
+  final Source source; // 👈 thêm dòng này
+
   Article({
     required this.title,
     this.description,
@@ -15,9 +19,9 @@ class Article {
     this.author,
     this.publishedAt,
     this.url,
+    required this.source, // 👈 thêm
   });
 
-  /// Convert JSON -> Object
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
       title: json['title'] ?? '',
@@ -27,40 +31,7 @@ class Article {
       author: json['author'],
       publishedAt: json['publishedAt'],
       url: json['url'],
+      source: Source.fromJson(json['source'] ?? {}), // 👈 thêm
     );
-  }
-
-  /// Convert Object -> JSON (nếu cần gửi ngược lên server)
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'description': description,
-      'urlToImage': imageUrl,
-      'content': content,
-      'author': author,
-      'publishedAt': publishedAt,
-      'url': url,
-    };
-  }
-}
-
-class Source {
-  final String? id;
-  final String name;
-
-  Source({this.id, required this.name});
-
-  factory Source.fromJson(Map<String, dynamic> json) {
-    return Source(
-      id: json['id'],
-      name: json['name'] ?? '',
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-    };
   }
 }

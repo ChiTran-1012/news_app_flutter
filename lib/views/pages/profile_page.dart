@@ -68,13 +68,13 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             SizedBox(
-  width: double.infinity, // 👉 full ngang
-  height: 50,             // 👉 chiều cao
-  child: ElevatedButton(
-    onPressed: () {},
-    child: const Text("Login"),
-  ),
-)
+              width: double.infinity, // 👉 full ngang
+              height: 50, // 👉 chiều cao
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text("Login"),
+              ),
+            ),
           ],
         ),
       ),
